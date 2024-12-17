@@ -1,6 +1,4 @@
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
-use serde_json::Value;
-use solana_account_decoder::UiAccount;
 use solana_sdk::pubkey::Pubkey;
 
 use crate::serde_helpers::option_field_as_string;
@@ -177,9 +175,6 @@ pub struct TransactionConfig {
     /// Skip RPC calls and assume the user account do not exist,
     /// as a result all setup instruction will be populated but no RPC call will be done for user related accounts (token accounts, openbook open orders...)
     pub skip_user_accounts_rpc_calls: bool,
-    /// Providing keyed ui accounts allow loading AMMs that are not in the market cache
-    /// If a keyed ui account is the AMM state, it has to be provided with its params according to the market cache format
-    pub keyed_ui_accounts: Option<Vec<KeyedUiAccount>>,
     /// The program authority ID
     pub program_authority_id: Option<u8>,
     /// Dynamic slippage
@@ -206,20 +201,10 @@ impl Default for TransactionConfig {
             use_token_ledger: false,
             dynamic_compute_unit_limit: false,
             skip_user_accounts_rpc_calls: false,
-            keyed_ui_accounts: None,
             program_authority_id: None,
             dynamic_slippage: None,
             blockhash_slots_to_expiry: None,
             correct_last_valid_block_height: false,
         }
     }
-}
-
-#[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
-pub struct KeyedUiAccount {
-    pub pubkey: String,
-    #[serde(flatten)]
-    pub ui_account: UiAccount,
-    /// Additional data an Amm requires, Amm dependent and decoded in the Amm implementation
-    pub params: Option<Value>,
 }

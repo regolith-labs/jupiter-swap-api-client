@@ -2104,7 +2104,6 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_qs",
- "solana-account-decoder",
  "solana-sdk",
  "thiserror 2.0.7",
 ]
