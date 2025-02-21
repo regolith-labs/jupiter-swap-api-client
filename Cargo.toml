@@ -5,5 +5,5 @@ members = ["jupiter-swap-api-client", "example"]
 edition = "2021"
 
 [workspace.dependencies]
-solana-sdk = "1.18"
-solana-client = "1.18"
+solana-sdk = "2.1"
+solana-client = "2.1"
