@@ -29,8 +29,8 @@ pub struct SwapInfo {
     /// An estimation of the output amount into the AMM
     #[serde(with = "field_as_string")]
     pub out_amount: u64,
-    #[serde(with = "field_as_string")]
-    pub fee_amount: u64,
+    // #[serde(with = "field_as_string")]
+    // pub fee_amount: u64,
     #[serde(with = "field_as_string")]
     pub fee_mint: Pubkey,
 }
