@@ -87,6 +87,7 @@ pub struct QuoteRequest {
     /// Platform fee in basis points
     pub platform_fee_bps: Option<u8>,
     pub dexes: Option<Dexes>,
+    #[serde(rename = "excludeDexes")]
     pub excluded_dexes: Option<Dexes>,
     /// Quote only direct routes
     pub only_direct_routes: Option<bool>,
@@ -145,6 +146,7 @@ pub struct InternalQuoteRequest {
     /// Platform fee in basis points
     pub platform_fee_bps: Option<u8>,
     pub dexes: Option<Dexes>,
+    #[serde(rename = "excludeDexes")]
     pub excluded_dexes: Option<Dexes>,
     /// Quote only direct routes
     pub only_direct_routes: Option<bool>,
@@ -227,4 +229,17 @@ pub struct QuoteResponse {
     pub context_slot: u64,
     #[serde(default)]
     pub time_taken: f64,
+}
+
+#[test]
+fn exclude_dexes_encoding() {
+    let encoded = serde_urlencoded::to_string(&InternalQuoteRequest {
+        excluded_dexes: Some("X".into()),
+        ..Default::default()
+    })
+    .unwrap();
+
+    println!("{encoded}");
+
+    assert!(encoded.contains("excludeDexes=X"))
 }
